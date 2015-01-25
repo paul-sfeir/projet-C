@@ -110,16 +110,22 @@ int supprimerLigneFichier(char * nomFichier, int numeroLigne, int tailleMaxLigne
     return 0;
 }
 
-int extraitParametres(char * requete, char * parametres[]){
+void extraitParametres(char * requete, char * parametres[]){
+    int i = 0;
 
+    parametres[0] = strtok(requete, " ");
+    i++;
 
-
-    return 0;
+    while(parametres[i-1] != NULL){
+        parametres[i] = strtok(NULL, " ");
+        i++;
+    }
 }
 
 int main ()
 {
-    char * lecture[TAILLE_MAX_LIGNE];
+    /// TEST FONCTION ECRITURE
+    /*
     char * chaine[1];
 
     char * ch1 = "ligne ";
@@ -128,6 +134,11 @@ int main ()
     chaine[0] = ch1;
     chaine[1] = ch2;
     ecrireDansUnFicher(chaine, 2, "test.txt");
+    */
+
+    /// TEST FONCTION LECTURE
+    /*
+    char * lecture[TAILLE_MAX_LIGNE];
 
     //      1 = ligne 1
     if(lectureLigneFichier("test.txt", 2, lecture) != 0){
@@ -136,8 +147,27 @@ int main ()
     else{
         printf("%s", lecture);
     }
+    */
 
+    /// TEST FONCTION SUPPRESSION
+    /*
     supprimerLigneFichier("test.txt", 4, TAILLE_MAX_LIGNE);
+    */
+
+    ///TEST FONCTION EXTRAIT PARAMETRES
+    /*
+    char * lecture2[TAILLE_MAX_LIGNE];
+    char * parametres[10];
+    int i = 0;
+
+    lectureLigneFichier("test.txt", 2, lecture2);
+    extraitParametres(lecture2, parametres);
+
+    while(parametres[i] != NULL){
+        printf("%d: %s \n", i+1, parametres[i]);
+        i++;
+    }
+    */
 
 	return 0;
 }
