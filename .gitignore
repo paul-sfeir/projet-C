@@ -1,0 +1,14 @@
+#comment after '#'
+
+#exclude all the config files
+*.layout
+*.depend
+
+#exclude the compiled files
+Client/bin/
+Client/obj/
+Serveur/bin/
+Serveur/obj/
+
+#exclude for the moment the test files
+*.txt
