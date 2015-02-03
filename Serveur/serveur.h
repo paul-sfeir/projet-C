@@ -43,8 +43,6 @@ int ReceptionBinaire(char *donnees, size_t tailleMax);
  */
 int EmissionBinaire(char *donnees, size_t taille);
 
-int extraitParametres(char requete[], char * parametres[]);
-
 int envoyerContenuFichierTexte(char *nomFichier);
 
 /* Ferme la connexion avec le client.

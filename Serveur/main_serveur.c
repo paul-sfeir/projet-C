@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "serveur.h"
-#include "lecture_ecriture_fichier.h"
 #include <string.h>
+#include "serveur.h"
+#include "controlleur.h"
+#include "lecture_ecriture_fichier.h"
+
 
 int main() {
 	char *requete = NULL;
@@ -23,7 +25,7 @@ int main() {
         switch ((int) parametres[0][0] - '0'){ //transforme en int
 
             case 0:
-                printf("0\n");
+                creerUtilisateur(parametres, nbParams);
 
                 break;
 

@@ -20,6 +20,7 @@
 #include <errno.h>
 
 #include "serveur.h"
+#include "controlleur.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -278,23 +279,6 @@ int EmissionBinaire(char *donnees, size_t taille) {
 	} else {
 		return retour;
 	}
-}
-
-/*
-Extrait les parametres et les place dans le tableau de chaine de caractère.
-Renvoie le nombre de paramètres extrait
-*/
-int extraitParametres(char requete[], char * parametres[]){
-    int i = 0;
-
-    parametres[0] = strtok(requete, " ");
-    i++;
-
-    while(parametres[i-1] != NULL){
-        parametres[i] = strtok(NULL, " ");
-        i++;
-    }
-    return i;
 }
 
 int envoyerContenuFichierTexte(char *nomFichier){

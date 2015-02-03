@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "controlleur.h"
 
 #define ERREUR_OUVERTURE -1
 #define ERREUR_ECRITURE_FICH -2
@@ -67,6 +68,29 @@ int lectureLigneFichier(char nomFichier[], int numeroLigne, char ligneLue[]){
 
     return 0;
 
+}
+
+int isExistant(char nomFichier[], char aComparer[]){
+
+    FILE *f;
+    char ligneLue[TAILLE_MAX_LIGNE + 1];
+    char * parametres[20]; // max 20 parametres
+    int isExistant = 0; // 0 = false
+
+    f = fopen(nomFichier, "r");
+
+    if(f == NULL){
+        return ERREUR_OUVERTURE;
+    }
+
+    while(isExistant == 0 || fgets(ligneLue, sizeof ligneLue, f) != NULL){
+        extraitParametres(ligneLue, parametres);
+        if(strcmp(aComparer, parametres[0])){
+            isExistant = 1;
+        }
+    }
+
+    return isExistant;
 }
 
 int supprimerLigneFichier(char nomFichier[], int numeroLigne, int tailleMaxLigne){
