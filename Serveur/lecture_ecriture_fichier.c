@@ -19,7 +19,10 @@ int ecrireDansUnFicher(char nomFichier[], char * parametre[], int nbParams)
     int i;
 
     // i commence à 1 car le paramètre 0 est toujours un chiffre correspondant au numéro d'une requête
-    for(i=1; i<nbParams; i++)
+    strcpy(parametreFormate, parametre[1]);
+    strcat(parametreFormate, " ");
+
+    for(i=2; i<nbParams; i++)
     {
         strcat(parametreFormate, parametre[i]);
 

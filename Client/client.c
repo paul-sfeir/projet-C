@@ -243,5 +243,6 @@ int EmissionBinaire(char *donnees, size_t taille) {
 /* Ferme la connexion.
  */
 void Terminaison() {
+
 	close(socketClient);
 }

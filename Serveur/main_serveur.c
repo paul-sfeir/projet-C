@@ -5,7 +5,10 @@
 #include "controlleur.h"
 #include "lecture_ecriture_fichier.h"
 
-#define FICHIERS_UTILISATEURS "utilisateurs.txt"
+#define FICHIERS_UTILISATEURS "comptes_utilisateurs.txt"
+#define ENCHERES "encheres.txt"
+#define RESULTATS_ENCHERES "resultats_encheres.txt"
+#define CATEGORIES "categories.txt"
 
 
 int main() {
@@ -15,15 +18,18 @@ int main() {
     int retour;
     char retourClient[2];
 
-
 	Initialisation();
     AttenteClient();
 
 	while(1) {
 
-		requete = Reception();
+        requete = Reception();
+        if(requete == NULL){
+            break;
+        }
 
 		nbParams = extraitParametres(requete, parametres);
+
         switch ((int) parametres[0][0] - '0'){ //transforme en int
 
             case 0:
@@ -80,6 +86,7 @@ int main() {
 
             case 8:
                 printf("8\n");
+                TerminaisonClient();
                 break;
 
             case 9:
@@ -87,8 +94,9 @@ int main() {
                 break;
 
         }
-
 	}
+
+    Terminaison();
 
 	return 0;
 }
