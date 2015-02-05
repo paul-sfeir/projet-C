@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "client.h"
 
 int main() {
@@ -10,18 +11,22 @@ int main() {
 		return 1;
 	}
 
-    if(Emission("0 paul sfeir\n")!=1) {
+     if(Emission("0 Mai6 Hoang\n")!=1) {
         printf("Erreur d'emission\n");
     }
-/*
-	message = Reception();
-	while(message != NULL) {
-		printf("%s\n", message);
-		free(message);
-		message = Reception();
-	}
-*/
 
+    message = Reception();
+    printf("%s\n", message);
+    fflush(stdout);
+    sleep(1);
+
+    if(Emission("0 Mai5 Hoang\n")!=1) {
+        printf("Erreur d'emission\n");
+    }
+
+    message = Reception();
+    printf("%s\n", message);
+fflush(stdout);
 	Terminaison();
 
 	return 0;

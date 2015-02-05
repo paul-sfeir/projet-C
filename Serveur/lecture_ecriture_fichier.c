@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "lecture_ecriture_fichier.h"
 #include "controlleur.h"
 
 #define ERREUR_OUVERTURE -1
@@ -9,7 +10,6 @@
 #define ERREUR_ECRITURE_BUFFER -4
 #define ERREUR_LECTURE_FICH -5
 
-#define TAILLE_MAX_LIGNE 500
 
 
 int ecrireDansUnFicher(char nomFichier[], char * parametre[], int nbParams)
@@ -17,7 +17,9 @@ int ecrireDansUnFicher(char nomFichier[], char * parametre[], int nbParams)
     FILE * fichier;
     char parametreFormate[TAILLE_MAX_LIGNE];
     int i;
-    for(i=0;i<nbParams;i++)
+
+    // i commence à 1 car le paramètre 0 est toujours un chiffre correspondant au numéro d'une requête
+    for(i=1; i<nbParams; i++)
     {
         strcat(parametreFormate, parametre[i]);
 
@@ -26,7 +28,6 @@ int ecrireDansUnFicher(char nomFichier[], char * parametre[], int nbParams)
             strcat(parametreFormate, " ");
         }
     }
-    strcat(parametreFormate, "\n");
 
     fichier=fopen(nomFichier,"a");
     if (fichier == NULL)
@@ -49,7 +50,6 @@ int lectureLigneFichier(char nomFichier[], int numeroLigne, char ligneLue[]){
     int i;
 
     fichier = fopen(nomFichier, "r");
-
     if(fichier == NULL){
         return ERREUR_OUVERTURE;
     }
@@ -57,40 +57,15 @@ int lectureLigneFichier(char nomFichier[], int numeroLigne, char ligneLue[]){
     for(i = 0; i < numeroLigne; i++){
         //Si le numéro de ligne est supérieur à ce qu'il y a dans le fichier
         if(fgets(ligneLue, TAILLE_MAX_LIGNE, fichier) == NULL){
+            fclose(fichier);
             return -1;
         }
     }
 
     fclose(fichier);
 
-    //enlève "\n" de la chaine lue
-    ligneLue[strlen(ligneLue) - 1] = '\0';
-
     return 0;
 
-}
-
-int isExistant(char nomFichier[], char aComparer[]){
-
-    FILE *f;
-    char ligneLue[TAILLE_MAX_LIGNE + 1];
-    char * parametres[20]; // max 20 parametres
-    int isExistant = 0; // 0 = false
-
-    f = fopen(nomFichier, "r");
-
-    if(f == NULL){
-        return ERREUR_OUVERTURE;
-    }
-
-    while(isExistant == 0 || fgets(ligneLue, sizeof ligneLue, f) != NULL){
-        extraitParametres(ligneLue, parametres);
-        if(strcmp(aComparer, parametres[0])){
-            isExistant = 1;
-        }
-    }
-
-    return isExistant;
 }
 
 int supprimerLigneFichier(char nomFichier[], int numeroLigne, int tailleMaxLigne){

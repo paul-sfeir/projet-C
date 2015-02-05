@@ -5,32 +5,53 @@
 #include "controlleur.h"
 #include "lecture_ecriture_fichier.h"
 
+#define FICHIERS_UTILISATEURS "utilisateurs.txt"
+
 
 int main() {
 	char *requete = NULL;
 	char * parametres[20]; //nombre max de paramètres dans une requête
-	char nomFichier[1024];
-    int i, nbParams;
+    int nbParams;
+    int retour;
+    char retourClient[2];
 
 
 	Initialisation();
+    AttenteClient();
 
 	while(1) {
 
-		AttenteClient();
 		requete = Reception();
 
 		nbParams = extraitParametres(requete, parametres);
-
         switch ((int) parametres[0][0] - '0'){ //transforme en int
 
             case 0:
-                creerUtilisateur(parametres, nbParams);
-
+                retour = creerUtilisateur(FICHIERS_UTILISATEURS, parametres, nbParams);
+                retourClient[0] = (char) retour + '0';
+                retourClient[1] = '\n';
+                retourClient[2] = '\0';
+                    if(Emission(retourClient)!=1) {
+                        printf("Erreur d'emission\n");
+                    }
                 break;
 
             case 1:
-                printf("1\n");
+                retour = authentification(FICHIERS_UTILISATEURS, parametres[1], parametres[2]);
+                 switch(retour){
+                    case 0:
+                        printf("Connexion OK");
+                        break;
+
+                    case 1:
+                        printf("mot de passe invalide\n");
+                        break;
+
+                    case 2:
+                        printf("identifiants invalide\n");
+                        break;
+                 }
+
                 break;
 
             case 2:
