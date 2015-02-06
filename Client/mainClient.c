@@ -11,7 +11,7 @@ int main() {
 		return 1;
 	}
 
-     if(Emission("0 Mai mdp Mai Hoang 1 19_Rue_Du_Soleil 0123456789\n")!=1) {
+     if(Emission("2 newEnchère description_blabla www.coucou.fr\n")!=1) {
         printf("Erreur d'emission\n");
     }
 
@@ -20,7 +20,7 @@ int main() {
     fflush(stdout);
     sleep(1);
 
-    if(Emission("0 Paul mdp2 Paul Sfeir 1 19_Rue_Du_Soleil 0123456789\n")!=1) {
+    if(Emission("2 newEnchère2 description_blibli www.coucou2.fr\n")!=1) {
         printf("Erreur d'emission\n");
     }
 

@@ -19,4 +19,11 @@ int extraitParametres(char requete[], char * parametres[]);
 // regarde si un identifiant existe déjà
 int isExistant(char nomFichier[], char aComparer[]);
 
+// Formatte le retour des requêtes (transforme le retour (int) en retourClient (char*))
+void formatteMessageRetour(int retour, char retourClient[]);
+
+//Ajoute une enchère dans le fichier enchère. Aucune vérification n'est nécessaire, il suffit de créer un identifiant unique
+int ajoutEnchere(char nomFichier[], char * parametres[], int nbParams);
+
+
 #endif
