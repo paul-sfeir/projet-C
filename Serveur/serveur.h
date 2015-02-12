@@ -43,7 +43,7 @@ int ReceptionBinaire(char *donnees, size_t tailleMax);
  */
 int EmissionBinaire(char *donnees, size_t taille);
 
-int envoyerContenuFichierTexte(char *nomFichier);
+void envoyerContenuFichierTexte(char *nomFichier);
 
 /* Ferme la connexion avec le client.
  */

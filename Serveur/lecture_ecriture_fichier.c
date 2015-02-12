@@ -94,7 +94,7 @@ int supprimerLigneFichier(char nomFichier[], int numeroLigne, int tailleMaxLigne
         fclose(fIn);
         return ERREUR_OUVERTURE;
     }
-
+    fflush(stdin);
     while (fgets(ligneLue, sizeof ligneLue, fIn) != NULL)
     {
         if (i != numeroLigne){

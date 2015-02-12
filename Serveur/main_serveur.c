@@ -18,8 +18,7 @@ int main() {
     int nbParams;
     int retour;
     char retourClient[2];
-    char nomUtilisateur[31];
-    int statutUtilisateur;
+    char pseudoUtilisateur[31];
 
 	Initialisation();
     AttenteClient();
@@ -46,30 +45,21 @@ int main() {
 
             case 1:
                 parametres[2][strlen(parametres[2])-1] = '\0'; //On enlève le caractère \n du mot de passe
+
                 retour = authentification(FICHIER_UTILISATEURS, parametres[1], parametres[2]);
-                if(retour > 2 ){
-                    strcpy(nomUtilisateur, parametres[1]);
-                    statutUtilisateur = retour;
-                    retour = 0;
+                if(retour == 0 ){
+                    strcpy(pseudoUtilisateur, parametres[1]);
                 }
 
                 formatteMessageRetour(retour, retourClient);
                 if(Emission(retourClient)!=1) {
                     printf("Erreur d'emission\n");
                 }
-                if(retour == 0){
-                    sleep(1);
-                    // On renvoie le statut de l'utilisateur
-                    formatteMessageRetour(statutUtilisateur, retourClient);
-                    if(Emission(retourClient)!=1) {
-                        printf("Erreur d'emission\n");
-                    }
-                }
 
                 break;
 
             case 2:
-                retour = ajoutEnchere(FICHIER_ENCHERES, parametres, nbParams);
+                retour = ajoutEnchere(FICHIER_ENCHERES, parametres, nbParams, pseudoUtilisateur);
                 formatteMessageRetour(retour, retourClient);
                 if(Emission(retourClient)!=1) {
                     printf("Erreur d'emission\n");
@@ -77,30 +67,45 @@ int main() {
                 break;
 
             case 3:
-                printf("3\n");
+                parametres[2][strlen(parametres[2])-1] = '\0'; //On enlève le caractère \n du montant de l'enchère
+                retour = encherir(FICHIER_ENCHERES, parametres[1], parametres[2], pseudoUtilisateur);
+                formatteMessageRetour(retour, retourClient);
+                if(Emission(retourClient)!=1) {
+                    printf("Erreur d'emission\n");
+                }
                 break;
 
             case 4:
-                printf("4\n");
+                parametres[1][strlen(parametres[1])-1] = '\0'; //On enlève le caractère \n du montant de l'enchère
+                retour = finirEnchere(FICHIER_ENCHERES, FICHIER_RESULTATS_ENCHERES, parametres[1], pseudoUtilisateur);
+                formatteMessageRetour(retour, retourClient);
+                if(Emission(retourClient)!=1) {
+                    printf("Erreur d'emission\n");
+                }
                 break;
 
             case 5:
-                printf("5\n");
+                envoyerContenuFichierTexte(FICHIER_ENCHERES);
                 break;
 
             case 6:
-                printf("6\n");
+                envoyerResultatEnchere(FICHIER_RESULTATS_ENCHERES, pseudoUtilisateur);
                 break;
 
             case 7:
-                printf("7\n");
+                envoyerDetailEnchere(FICHIER_ENCHERES, parametres[1]);
                 break;
 
             case 8:
-                printf("8\n");
-
-                TerminaisonClient();
+                strcpy(pseudoUtilisateur,"");
+                formatteMessageRetour(0, retourClient);
+                if(Emission(retourClient)!=1) {
+                    printf("Erreur d'emission\n");
+                }
                 break;
+
+            case 9:
+                rechercherEnchere(FICHIER_ENCHERES, FICHIER_RESULTATS_ENCHERES, parametres[1]);
         }
 
 	}

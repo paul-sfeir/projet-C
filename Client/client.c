@@ -239,6 +239,17 @@ int EmissionBinaire(char *donnees, size_t taille) {
 	}
 }
 
+void enleverEspace(char * chaine){
+    int i = 0;
+
+    while(chaine[i] != '\0'){
+        if(chaine[i] == ' '){
+            chaine[i] = '_';
+        }
+        i++;
+    }
+}
+
 
 /* Ferme la connexion.
  */

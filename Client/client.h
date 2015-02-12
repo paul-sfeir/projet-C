@@ -39,6 +39,8 @@ int ReceptionBinaire(char *donnees, size_t tailleMax);
  */
 int EmissionBinaire(char *donnees, size_t taille);
 
+void enleverEspace(char * chaine);
+
 /* Ferme la connexion.
  */
 void Terminaison();

@@ -281,29 +281,45 @@ int EmissionBinaire(char *donnees, size_t taille) {
 	}
 }
 
-int envoyerContenuFichierTexte(char *nomFichier){
+void envoyerContenuFichierTexte(char *nomFichier){
     FILE *f;
-    char chemin[2048];
     char ligne[4096];
+    int i = 0;
+    char requete[15];
+    char ligneModifie[4096];
+    char * params[20];
 
-
-    strcpy(chemin, "/home/paul/Downloads/TP3-Serveur");
-    strcat(chemin, nomFichier);
-
-    f = fopen(chemin, "r");
+    f = fopen(nomFichier, "r");
 
     if(f != NULL){
+        while (fgets(ligne, sizeof(ligne), f) != NULL){
+                i++;
+        }
+        //précise le nombre de ligne allant être envoyé.
+        sprintf(requete, "%d", i);
+        strcat(requete, "\n");
+        Emission(requete);
 
-	while (fgets(ligne, sizeof(ligne), f) != NULL){
-		strcat(ligne, "\n");
-		Emission(ligne);
-	}
-    }
-    else{
-	//envoyerReponse404("/404.html");
-    }
+        fclose(f);
+        f = fopen(nomFichier, "r");
 
-    return 1;
+        while (fgets(ligne, sizeof(ligne), f) != NULL){
+            extraitParametres(ligne, params);
+            if(params[0][0] == '\n')
+                break;
+            strcpy(ligneModifie, params[0]);
+            strcat(ligneModifie, "\t\t");
+            strcat(ligneModifie, params[1]);
+            strcat(ligneModifie, "\t\t");
+            strcat(ligneModifie, params[4]);
+            strcat(ligneModifie, "\n");
+            printf("%s\n", ligneModifie);
+
+            if(Emission(ligneModifie) != 1)
+                printf("Erreur communication\n");
+        }
+        fclose(f);
+    }
 
 }
 
